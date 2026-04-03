@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 
 
 
-// GET /alerts — Get all alerts with optional filters and pagination
+
 export const getAllAlerts = async (req, res, next) => {
   try {
     const { status, alert_type, page = 1, limit = 10 } = req.query;
 
-    // Build filter object
+   
     const filter = {};
     if (status) filter.status = status;
     if (alert_type) filter.alert_type = alert_type;
@@ -38,7 +38,7 @@ export const getAllAlerts = async (req, res, next) => {
 
 
 
-// GET /alerts/:id — Get a specific alert by ID
+
 export const getAlertById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -62,7 +62,6 @@ export const getAlertById = async (req, res, next) => {
 
 
 
-// POST /alerts — Create a new alert
 export const createAlert = async (req, res, next) => {
   try {
     const alert = await Alert.create(req.body);
@@ -76,7 +75,7 @@ export const createAlert = async (req, res, next) => {
     next(error);
   }
 };
-// DELETE /alerts/:id — Delete an alert
+
 export const deleteAlert = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -95,7 +94,7 @@ export const deleteAlert = async (req, res, next) => {
     next(error);
   }
 };
-// PUT /alerts/:id — Update an alert
+
 export const updateAlert = async (req, res, next) => {
   try {
     const { id } = req.params;

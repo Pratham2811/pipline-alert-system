@@ -1,3 +1,6 @@
+
+//this is seed data injected into database once only 
+
 import Alert from '../models/Alert.js';
 
 const sampleAlerts = [

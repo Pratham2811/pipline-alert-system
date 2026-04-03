@@ -62,3 +62,17 @@ export const getAlertById = async (req, res, next) => {
 
 
 
+// POST /alerts — Create a new alert
+export const createAlert = async (req, res, next) => {
+  try {
+    const alert = await Alert.create(req.body);
+    res.status(201).json({ success: true, data: alert });
+  } catch (error) {
+    // Handle Mongoose validation errors
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((e) => e.message);
+      return res.status(400).json({ success: false, errors: messages });
+    }
+    next(error);
+  }
+};

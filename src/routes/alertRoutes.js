@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  // createAlert,
+  createAlert,
   getAllAlerts,
   getAlertById,
   // updateAlert,
@@ -14,11 +14,12 @@ const router = express.Router();
 
 
 router.route('/')
-
-  .get(getAllAlerts);
+  .get(getAllAlerts)
+  .post(createAlertRules, validate, createAlert);
 
 router.route('/:id')
   .get(getAlertById)
+
   
 
 export default router;

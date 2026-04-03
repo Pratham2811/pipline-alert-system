@@ -3,8 +3,8 @@ import {
   createAlert,
   getAllAlerts,
   getAlertById,
-  // updateAlert,
-  // deleteAlert,
+  updateAlert,
+  deleteAlert,
   // getAlertsSummary,
   // getAlertsStatistics,
 } from '../controllers/alertController.js';
@@ -19,6 +19,8 @@ router.route('/')
 
 router.route('/:id')
   .get(getAlertById)
+  .put(updateAlertRules, validate, updateAlert)
+  .delete(deleteAlert);
 
   
 

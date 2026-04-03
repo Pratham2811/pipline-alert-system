@@ -76,3 +76,49 @@ export const createAlert = async (req, res, next) => {
     next(error);
   }
 };
+// DELETE /alerts/:id — Delete an alert
+export const deleteAlert = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, error: 'Invalid alert ID format' });
+    }
+
+    const alert = await Alert.findByIdAndDelete(id);
+    if (!alert) {
+      return res.status(404).json({ success: false, error: 'Alert not found' });
+    }
+
+    res.status(200).json({ success: true, message: 'Alert deleted successfully', data: alert });
+  } catch (error) {
+    next(error);
+  }
+};
+// PUT /alerts/:id — Update an alert
+export const updateAlert = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, error: 'Invalid alert ID format' });
+    }
+
+    const alert = await Alert.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!alert) {
+      return res.status(404).json({ success: false, error: 'Alert not found' });
+    }
+
+    res.status(200).json({ success: true, data: alert });
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((e) => e.message);
+      return res.status(400).json({ success: false, errors: messages });
+    }
+    next(error);
+  }
+};

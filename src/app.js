@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/alerts', alertRoutes);
+app.use('/api/alerts',alertRoutes);
 
 // Health check
 app.get('/', (req, res) => {
@@ -23,6 +23,8 @@ app.use((req, res) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
+  console.log(err);
+  
   console.error('Server Error:', err.message);
   res.status(500).json({ success: false, error: 'Internal server error' });
 });

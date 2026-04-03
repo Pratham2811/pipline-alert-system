@@ -1,6 +1,6 @@
 import { body, validationResult } from 'express-validator';
 
-// Validation rules for creating an alert
+
 export const createAlertRules = [
   body('pipeline_segment')
     .notEmpty()
@@ -39,7 +39,6 @@ export const createAlertRules = [
     .withMessage('Status must be active, investigating, or resolved'),
 ];
 
-// Validation rules for updating an alert (all fields optional)
 export const updateAlertRules = [
   body('pipeline_segment')
     .optional()
@@ -75,6 +74,8 @@ export const updateAlertRules = [
 
 // Middleware to check validation results
 export const validate = (req, res, next) => {
+
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({

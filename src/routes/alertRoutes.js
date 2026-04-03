@@ -2,7 +2,7 @@ import express from 'express';
 import {
   // createAlert,
   getAllAlerts,
-  // getAlertById,
+  getAlertById,
   // updateAlert,
   // deleteAlert,
   // getAlertsSummary,
@@ -17,6 +17,8 @@ router.route('/')
 
   .get(getAllAlerts);
 
-
+router.route('/:id')
+  .get(getAlertById)
+  
 
 export default router;

@@ -38,6 +38,27 @@ export const getAllAlerts = async (req, res, next) => {
 
 
 
+// GET /alerts/:id — Get a specific alert by ID
+export const getAlertById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, error: 'Invalid alert ID format' });
+    }
+
+    const alert = await Alert.findById(id);
+    console.log(alert);
+    
+    if (!alert) {
+      return res.status(404).json({ success: false, error: 'Alert not found' });
+    }
+
+    res.status(200).json({ success: true, data: alert });
+  } catch (error) {
+    next(error);
+  }
+};
 
 
 

@@ -1,0 +1,147 @@
+@baseUrl = http://localhost:5000/api
+
+### =============================================
+### Health Check
+### =============================================
+GET http://localhost:5000
+Content-Type: application/json
+
+### =============================================
+### 1. GET ALL ALERTS (with pagination)
+### =============================================
+GET {{baseUrl}}/alerts?page=1&limit=10
+Content-Type: application/json
+
+### =============================================
+### 2. GET ALL ALERTS — Filter by status
+### =============================================
+GET {{baseUrl}}/alerts?status=active
+Content-Type: application/json
+
+### =============================================
+### 3. GET ALL ALERTS — Filter by alert_type
+### =============================================
+GET {{baseUrl}}/alerts?alert_type=leak
+Content-Type: application/json
+
+### =============================================
+### 4. GET ALL ALERTS — Filter by both
+### =============================================
+GET {{baseUrl}}/alerts?status=active&alert_type=theft
+Content-Type: application/json
+
+### =============================================
+### 5. GET ALERTS SUMMARY (grouped by status & severity)
+### =============================================
+GET {{baseUrl}}/alerts/summary
+Content-Type: application/json
+
+### =============================================
+### 6. GET ALERTS STATISTICS (bonus)
+### =============================================
+GET {{baseUrl}}/alerts/statistics
+Content-Type: application/json
+
+### =============================================
+### 7. CREATE A NEW ALERT
+### =============================================
+POST {{baseUrl}}/alerts
+Content-Type: application/json
+
+{
+  "pipeline_segment": "Kerala-South-04",
+  "detection_method": "Method 3",
+  "alert_type": "theft",
+  "severity": "high",
+  "location_km": 95.7
+}
+
+### =============================================
+### 8. CREATE ALERT — Validation Error (missing fields)
+### =============================================
+POST {{baseUrl}}/alerts
+Content-Type: application/json
+
+{
+  "pipeline_segment": "Test-Segment"
+}
+
+### =============================================
+### 9. CREATE ALERT — Invalid severity
+### =============================================
+POST {{baseUrl}}/alerts
+Content-Type: application/json
+
+{
+  "pipeline_segment": "Test-Segment",
+  "detection_method": "Method 1",
+  "alert_type": "leak",
+  "severity": "critical",
+  "location_km": 50
+}
+
+### =============================================
+### 10. GET ALERT BY ID
+### Replace <ALERT_ID> with an actual MongoDB ObjectId
+### =============================================
+GET {{baseUrl}}/alerts/<ALERT_ID>
+Content-Type: application/json
+
+### =============================================
+### 11. GET ALERT BY ID — Invalid ID format
+### =============================================
+GET {{baseUrl}}/alerts/invalid-id-123
+Content-Type: application/json
+
+### =============================================
+### 12. GET ALERT BY ID — Not found
+### =============================================
+GET {{baseUrl}}/alerts/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+### =============================================
+### 13. UPDATE AN ALERT — Change status
+### Replace <ALERT_ID> with an actual MongoDB ObjectId
+### =============================================
+PUT {{baseUrl}}/alerts/<ALERT_ID>
+Content-Type: application/json
+
+{
+  "status": "investigating"
+}
+
+### =============================================
+### 14. UPDATE AN ALERT — Change severity & location
+### Replace <ALERT_ID> with an actual MongoDB ObjectId
+### =============================================
+PUT {{baseUrl}}/alerts/<ALERT_ID>
+Content-Type: application/json
+
+{
+  "severity": "low",
+  "location_km": 30.5
+}
+
+### =============================================
+### 15. UPDATE AN ALERT — Validation error
+### Replace <ALERT_ID> with an actual MongoDB ObjectId
+### =============================================
+PUT {{baseUrl}}/alerts/<ALERT_ID>
+Content-Type: application/json
+
+{
+  "severity": "extreme"
+}
+
+### =============================================
+### 16. DELETE AN ALERT
+### Replace <ALERT_ID> with an actual MongoDB ObjectId
+### =============================================
+DELETE {{baseUrl}}/alerts/<ALERT_ID>
+Content-Type: application/json
+
+### =============================================
+### 17. DELETE — Not found
+### =============================================
+DELETE {{baseUrl}}/alerts/507f1f77bcf86cd799439011
+Content-Type: application/json
